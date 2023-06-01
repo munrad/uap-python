@@ -11,6 +11,9 @@ from pybind11.setup_helpers import Pybind11Extension, build_ext
 from setuptools.command.install import install as _install
 
 
+build.sub_commands.insert(0, ("compile_uap_cpp", None))
+
+
 class CustomInstallCommand(_install):
     def run(self):
         _install.run(self)
@@ -60,6 +63,7 @@ setup(
         "compile_uap_cpp": CompileUapCpp,
         "build_ext": build_ext
     },
+    include_package_data=True,
     ext_modules=ext_modules,
     zip_safe=False
 )
