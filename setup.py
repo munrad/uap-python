@@ -1,15 +1,25 @@
 #!/usr/bin/env python
 # flake8: noqa
 from os import path
+from shutil import copyfile
+from pathlib import Path
 from subprocess import check_call
 from typing import Optional, List, Dict
-
 from setuptools import setup, Command
 from setuptools.command.build import build, SubCommand
 from pybind11.setup_helpers import Pybind11Extension, build_ext
+from setuptools.command.install import install as _install
 
 
-build.sub_commands.insert(0, ("compile-uap-cpp", None))
+class CustomInstallCommand(_install):
+    def run(self):
+        _install.run(self)
+
+        # после установки копируем файл regexes.yaml
+        source_file = Path('uap-core/regexes.yaml')
+        target_file = Path(self.install_lib, 'ua_parser/regexes.yaml')
+        if source_file.is_file():
+            copyfile(source_file, target_file)
 
 
 class CompileUapCpp(Command, SubCommand):
@@ -46,11 +56,10 @@ ext_modules = [
 
 setup(
     cmdclass={
-        "compile-uap-cpp": CompileUapCpp,
+        "install": CustomInstallCommand,
+        "compile_uap_cpp": CompileUapCpp,
         "build_ext": build_ext
     },
     ext_modules=ext_modules,
-    include_package_data=True,
-    data_files=[('ua_parser', ['uap-core/regexes.yaml'])],
     zip_safe=False
 )
