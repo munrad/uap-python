@@ -2,3 +2,7 @@
 	path = uap-core
 	url = https://github.com/ua-parser/uap-core
 	branch = master
+[submodule "uap-cpp"]
+	path = uap-cpp
+	url = https://github.com/ua-parser/uap-cpp
+	branch = master

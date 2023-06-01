@@ -1,5 +1,9 @@
 [build-system]
-requires = ["setuptools", "setuptools-scm", "PyYaml"]
+requires = [
+    "setuptools",
+    "setuptools-scm",
+    "pybind11",
+]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -9,7 +13,9 @@ version = "1.0.0a"
 readme = "README.rst"
 requires-python = ">=3.8"
 dependencies = []
-optional-dependencies = { yaml = ["PyYaml"] }
+extend-ignore = [
+  "E501",
+]
 
 license = {text = "Apache 2.0"}
 urls = {repository = "https://github.com/ua-parser/uap-python"}

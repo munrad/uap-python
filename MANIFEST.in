@@ -6,4 +6,6 @@ include README.rst
 include LICENSE
 graft uap-core
 exclude uap-core/.*
+exclude uap-cpp/.*
 recursive-exclude uap-core *.js
+recursive-exclude uap-cpp *.cpp
